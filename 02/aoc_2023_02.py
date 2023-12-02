@@ -20,7 +20,8 @@ def extract(line):
         l.append(d)
     return int(meep[0].split(' ')[1]), l # game #, list of throw dicts
 
-flag = Exception('Hit the fan!')
+class Flag(Exception): pass
+
 cubes = {'red': 12, 'green': 13, 'blue': 14}
 
 def partone(lines):
@@ -31,8 +32,8 @@ def partone(lines):
             for th in throws:
                 for color in th:
                     if th[color] > cubes[color]:
-                        raise flag
-        except:
+                        raise Flag
+        except Flag:
             print(f'{game}, throw {th} is not possible')
         else:
             print(f'{game} is possible')
