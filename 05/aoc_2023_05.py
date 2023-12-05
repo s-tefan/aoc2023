@@ -1,6 +1,3 @@
-import math
-
-
 class InputError(Exception):
     pass
 
