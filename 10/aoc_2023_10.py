@@ -1,4 +1,4 @@
-# AoC 2023, day 9
+# AoC 2023, day 7
 # S-tefan
 import time
 
