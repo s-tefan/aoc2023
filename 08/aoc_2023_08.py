@@ -1,4 +1,4 @@
-# AoC 2023, day 7
+# AoC 2023, day 8
 # S-tefan
 import time, math
 
