@@ -33,5 +33,5 @@ for post in posts:
     r, c = r + dr, c + dc
     a += c*dr
     s += ds
-a += (s + 2)//2
+a = abs(a) + (s + 2)//2
 print(a)
