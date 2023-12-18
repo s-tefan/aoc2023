@@ -63,6 +63,7 @@ class NodeMap:
             d += 1
             if len(ap) == len(self.pos_list):
                 break
+        print(d)
         return math.lcm(*ap.values())
 
 
