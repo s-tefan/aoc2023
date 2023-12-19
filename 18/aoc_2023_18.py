@@ -38,6 +38,7 @@ for post in posts:
     a += c*dr
     s += ds
 a = abs(a) + (s + 2)//2
+print(time.perf_counter()-pc, time.process_time()-pt)
 print(a)
 
-print(time.perf_counter()-pc, time.process_time()-pt)
+
