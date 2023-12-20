@@ -1,8 +1,7 @@
 # AoC 2023, day 20
 # S-tefan
 
-# funkar inte riktigt med underklasserna som jag först tänkt
-# ska kanske bara ha Module och ha olika actions beroende på modultyp
+# funkar inte riktigt, tänk igenom hur det ska vara
 
 import time
 
@@ -13,51 +12,66 @@ def read_input(filename):
     return it
 
 class Module:
+    @staticmethod
+    def create(conf):
+        if conf[0] == 'broadcaster':
+            new_module = Broadcaster(conf)
+        elif conf[0] == 'button':
+            new_module = Button(conf)
+        elif conf[0][0] == '%':
+            new_module = FlipFlop(conf)
+        elif conf[0][0] == '&':
+            new_module = Conjunction(conf)
+        return new_module
+
     # ska man ha ett slags register som klassvariabel, kanske?
     def __init__(self, conf):
         self.targets = [k.strip() for  k in  conf[1].split(',')]
-        if conf[0] == 'broadcaster':
-            self = Broadcaster(conf)
-        elif conf[0] == 'button':
-            self = Button(conf)
-        elif conf[0][0] == '%':
-            self = FlipFlop(conf)
-        elif conf[0][0] == '&':
-            self = Conjunction(conf)
 
 class Broadcaster(Module):
     def __init__(self, conf):
         self.label = conf[0]
-        pass
-
+        Module.__init__(self, conf)
     def action(self, input):
-        pass
+        return [input for _ in self.targets]
 
 class FlipFlop(Module):    
     def __init__(self, conf):
         self.label = conf[0][1:]
-        pass
+        self.state = False
+        Module.__init__(self, conf)
     def action(self, input):
-        pass
+        if input:
+            return None
+        else: 
+            self.state ^= True # toggle 
+            return self.state,
 
 class Conjunction(Module):    
     def __init__(self, conf):
         self.label = conf[0][1:]
-        pass
+        Module.__init__(self, conf)
+        self.state = {k: False for k in self.targets}
     def action(self, input):
-        pass
+        self.state[input['label']] = input['value']
+        return not all(self.state.values()),
 
 class Button(Module):    
     def __init__(self, conf):
         self.label = conf[0][1:]
-        pass
+        Module.__init__(self, conf)
     def action(self, input):
         pass
 
 
-modules = set()
+modules = {}
 for conf in read_input('test.txt'):
-    m = Module(conf)
-    print(m.label, m.targets)
-    modules.add(Module(conf))
-
+    m = Module.create(conf)
+    print(type(m), m.label, m.targets, (m.state if hasattr(m, 'state') else ''))
+    modules[m.label] =  m
+mlist = ['module': modules['broadcast'], 'in': , True]
+while mlist:
+    m = mlist.pop(0)
+    pulses = m['module'].action(m['in'])
+    mlist += zip(m.targets, m.pulses)
+    print(mlist)
