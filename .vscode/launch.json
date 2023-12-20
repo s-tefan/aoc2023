@@ -10,8 +10,13 @@
             "request": "launch",
             "program": "${file}",
             "console": "integratedTerminal",
+<<<<<<< HEAD
             "justMyCode": true,
             "cwd": "${fileFolder}"
+=======
+            "cwd": "${fileDirname}",
+            "justMyCode": true
+>>>>>>> a0dff6d1083953ed0446c4eeb98b98f0c504ba1e
         }
     ]
 }
